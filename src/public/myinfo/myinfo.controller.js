@@ -1,16 +1,27 @@
 (function () {
-    'use strict';
-    angular.module('public')
-        .controller('InfoController', InfoController);
+  "use strict";
 
+  angular.module('public')
+  .controller('MyInfoController', MyInfoController);
 
-    InfoController.$inject = ['FavoriteDishService'];
+  MyInfoController.$inject = ['user'];
+  function MyInfoController(user) {
+    var $ctrl = this;
+    $ctrl.signedUp = false;
+    $ctrl.favoriteMenuItem;
 
-    function InfoController(FavoriteDishService) {
-
-        var self = this;
-
-        self.user = FavoriteDishService.user;
-        self.welcome = "Not Signed Up Yet.";
+    if(user) {
+      $ctrl.signedUp = true;
+      $ctrl.firstName = user.firstName;
+      $ctrl.lastName = user.lastName;
+      $ctrl.email = user.email;
+      $ctrl.phone = user.phone;
+      $ctrl.favoriteDish = user.favoriteDish;
+      $ctrl.favoriteMenuItem = user.favoriteMenuItem;
     }
+    else {
+      $ctrl.signedUp = false;
+    }
+  }
+
 })();

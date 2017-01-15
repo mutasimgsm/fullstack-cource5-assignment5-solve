@@ -42,16 +42,21 @@ function routeConfig ($stateProvider) {
       }
     })
     .state('public.signUp', {
-      url: '/signUp',
+      url: '/sign-up',
       templateUrl: 'src/public/signup.html',
-      controller: 'InfoController',
-      controllerAs: 'formCtrl'
+      controller: 'SignUpController',
+      controllerAs: 'signUpCtrl'
     })
-    .state('public.info', {
-      url: '/info',
+    .state('public.myInfo', {
+      url: '/my-info',
       templateUrl: 'src/public/myinfo/myinfo.html',
-      controller: 'InfoController',
-      controllerAs: 'infoCtrl'
+      controller: 'MyInfoController',
+      controllerAs: 'myInfoCtrl',
+      resolve: {
+        user: ['UsersService', function (UsersService) {
+          return UsersService.getUser();
+        }]
+      }
     });
 }
 })();

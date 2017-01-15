@@ -1,42 +1,30 @@
+
 <div class="container">
+  <h2>My information</h2>
+  <div ng-if="myInfoCtrl.signedUp">
+    <div class="row">
+      <div class="col-md-6">
+        <p>First name: {{ myInfoCtrl.firstName }}</p>
+        <p>Last name: {{ myInfoCtrl.lastName }}</p>
+        <p>E-mail address: {{ myInfoCtrl.email }}</p>
+        <p>Phone number: {{ myInfoCtrl.phone }}</p>
+      </div>
+      <div class="col-md-6">
+        <h3>Favorite dish</h3>
+        <div ng-if="myInfoCtrl.favoriteMenuItem">
+          <img ng-src="images/menu/{{ myInfoCtrl.favoriteMenuItem.category_short_name }}/{{ myInfoCtrl.favoriteMenuItem.category_short_name }}.jpg" class="pull-right">
+          <h4>{{ myInfoCtrl.favoriteMenuItem.name }} [{{ myInfoCtrl.favoriteDish }}]</h4>
+          <p>{{ myInfoCtrl.favoriteMenuItem.description }}</p>
+        </div>
+        <div ng-show="!myInfoCtrl.favoriteMenuItem">
+          <p>(You entered an invalid short name for your favorite dish when signing up.)</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <h1 ng-if="!infoCtrl.user.registered">
-    {{infoCtrl.welcome}} <a ui-sref="public.signUp"> Sign up Now! </a></h1>
-
-<div ng-if="infoCtrl.user.registered">
-
-    User Info:
-
-    <br/>
-    <label> First Name: {{infoCtrl.user.firstName}}</label>
-    <br/>
-
-    <br/>
-    <label> Last Name: {{infoCtrl.user.lastName}}</label>
-    <br/>
-
-    <br/>
-    <label> Email: {{infoCtrl.user.email}}</label>
-    <br/>
-
-    <br/>
-    <label> Phone: {{infoCtrl.user.tel}}</label>
-    <br/>
-
-    <img alt="Cat" ng-src="images/menu/{{infoCtrl.user.favoriteDish.category_short_name}}/{{infoCtrl.user.favoriteDish.category_short_name}}.jpg" />
-
-    <br/>
-    <label> Name: {{infoCtrl.user.favoriteDish.name}}</label>
-    <br/>
-    <label> Description: {{infoCtrl.user.favoriteDish.description}}</label>
-
-</div>
-
-<!--
-    First name: {{ reg.user.firstname }} <br>
-    Last name: {{ reg.user.lastname }} <br>
-    Email: {{ reg.user.email }} <br>
-    Phone: {{ reg.user.phone }} <br>
-    Favor menu number: {{ reg.user.menu }} -->
-
+  <div ng-if="!myInfoCtrl.signedUp">
+    <p>Not Signed Up Yet.</p>
+    <p><a ui-sref="public.signUp" class="btn btn-warning">Sign up Now!</a></p>
+  </div>
 </div>

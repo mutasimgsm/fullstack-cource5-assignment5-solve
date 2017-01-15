@@ -1,27 +1,38 @@
 (function () {
-    'use strict';
-    angular.module('public')
-        .controller('FormController', FormController);
+  "use strict";
 
-    FormController.$inject = ['FavoriteDishService'];
-    function FormController(FavoriteDishService) {
-        var $ctrl = this;
-        $ctrl.user = FavoriteDishService.user;
-        $ctrl.itemError = "";
-        $ctrl.confirmationMessage = "";
+  angular.module('public')
+    .controller('SignUpController', SignUpController);
 
-        $ctrl.submit = function () {
-            var user = $ctrl.user;
+  SignUpController.$inject = ['UsersService', 'MenuService'];
+  function SignUpController(UsersService, MenuService) {
+    var $ctrl = this;
+    $ctrl.registrationSuccess = false;
+    $ctrl.favoriteDishFound = false;
 
-            FavoriteDishService.save(user)
-                .then(() => {
-                    $ctrl.itemError = "";
-                    $ctrl.confirmationMessage = "Your information has been saved";
-                })
-                .catch(() => {
-                    $ctrl.itemError = "No such menu number exists";
-                });
-        };
-    }
+    $ctrl.signUp = function(event) {
+      console.log("Sign up started... ");
+      event.preventDefault();
+      var user = {
+            firstName: $ctrl.firstName,
+            lastName: $ctrl.lastName,
+            email: $ctrl.email,
+            phone: $ctrl.phone,
+            favoriteDish: $ctrl.favoriteDish
+      };
 
+      MenuService.getMenuItems($ctrl.favoriteDish)
+        .then(function(data) {
+          user.favoriteMenuItem = data;
+
+          UsersService.setUser(user);
+          $ctrl.favoriteDishFound = true;
+          $ctrl.registrationSuccess = true;
+        }, function(err) {
+          UsersService.setUser(user);
+          $ctrl.favoriteDishFound = false;
+          $ctrl.registrationSuccess = true;
+        });
+    };
+  }
 })();

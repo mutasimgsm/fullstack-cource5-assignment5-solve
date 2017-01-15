@@ -1,0 +1,97 @@
+<div class="container">
+<fieldset>
+  <legend>Registration</legend>
+  <form name="regForm" novalidate>
+
+  <table>
+
+  <tr>
+    <td>First name:</td><td><input type="text" name="firstname" placeholder="First name"
+    ng-model="reg.user.firstname"
+    required
+    minlength="4"
+    ng-maxlength="10"></td>
+
+    <!-- {{ reg.user.firstname }} -->
+    <td><span ng-if="(regForm.firstname.$error.minlength ||
+    regForm.firstname.$error.required) &&
+    regForm.firstname.$touched">
+    User must be at least 4 characters long
+  </span></td>
+    <td><span ng-if="regForm.firstname.$error.maxlength &&
+    regForm.firstname.$touched">
+    Username must not be longer than 10 characters
+  </span></td>
+</tr>
+
+<tr>
+    <td>Last name:</td><td><input type="text" name="lastname" placeholder="Last name"
+    ng-model="reg.user.lastname"
+    required
+    minlength="4"
+    ng-maxlength="10"></td>
+
+    <!-- {{ reg.user.lastname }} -->
+    <td><span ng-if="(regForm.lastname.$error.minlength ||
+    regForm.lastname.$error.required) &&
+    regForm.lastname.$touched">
+    User must be at least 4 characters long
+  </span></td>
+    <td><span ng-if="regForm.lastname.$error.maxlength &&
+    regForm.lastname.$touched">
+    Username must not be longer than 10 characters
+  </span></td>
+</tr>
+
+<tr>
+    <td>Email address:</td><td><input type="email" name="email" placeholder="Email"
+    ng-model="reg.user.email"
+    required></td>
+
+    <td><span ng-if="regForm.email.$invalid && regForm.email.$touched">
+      Must be a valid email address: handle@domain format
+    </span></td>
+</tr>
+
+<tr>
+    <td>Phone:</td><td><input type="text" name="phone" placeholder="Phone ###-###-####"
+    ng-model="reg.user.phone"
+    pattern="(\d{3})-(\d{3})-(\d{4})"></td>
+    <td><span ng-if="regForm.phone.$invalid && regForm.phone.$touched">
+
+      Phone must be in the format ###-###-####.
+    </span></td>
+</tr>
+
+<tr>
+    <td>menu number:</td><td><input type="text" name="menu" placeholder="favor menu number"
+    ng-model="reg.user.menu"
+    required></td>
+
+    <td><span ng-if="regForm.email.$invalid && regForm.menu.$touched">
+      Must be ...
+    </span></td>
+</tr>
+
+  </table>
+
+
+    <button
+    ng-disabled="regForm.$invalid"
+    ng-click="reg.submit()">Submit</button>
+
+    <div style="margin-top: 10px;">
+      Form valid? {{ regForm.$valid }}
+    </div>
+
+  </form>
+</fieldset>
+
+<div id="info" ng-if="!reg.completed">
+  First name: {{ reg.user.firstname }} <br>
+  Last name: {{ reg.user.lastname }} <br>
+  Email address: {{ reg.user.email }} <br>
+  Phone: {{ reg.user.phone }} <br>
+  Favor menu number: {{ reg.user.menu }}
+</div>
+</div>

@@ -1,15 +1,27 @@
 (function () {
-  'use strict';
-angular.module('public')
-.controller('RegistrationController', RegistrationController);
+    'use strict';
+    angular.module('public')
+        .controller('FormController', FormController);
 
+    FormController.$inject = ['FavoriteDishService'];
+    function FormController(FavoriteDishService) {
+        var $ctrl = this;
+        $ctrl.user = FavoriteDishService.user;
+        $ctrl.itemError = "";
+        $ctrl.confirmationMessage = "";
 
-function RegistrationController() {
-  var reg = this;
+        $ctrl.submit = function () {
+            var user = $ctrl.user;
 
-  reg.submit = function () {
-    reg.completed = true;
-  };
-}
+            FavoriteDishService.save(user)
+                .then(() => {
+                    $ctrl.itemError = "";
+                    $ctrl.confirmationMessage = "Your information has been saved";
+                })
+                .catch(() => {
+                    $ctrl.itemError = "No such menu number exists";
+                });
+        };
+    }
 
 })();
